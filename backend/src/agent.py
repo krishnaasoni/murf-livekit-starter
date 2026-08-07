@@ -1,6 +1,8 @@
 import logging
 
 from dotenv import load_dotenv
+from livekit.agents import UserInputTranscribedEvent
+
 from livekit import rtc
 from livekit.agents import (
     Agent,
@@ -12,6 +14,7 @@ from livekit.agents import (
     inference,
     tokenize,
     room_io,
+    UserInputTranscribedEvent,
 )
 from livekit.plugins import murf, silero, google, deepgram, noise_cancellation
 from livekit.plugins.turn_detector.multilingual import MultilingualModel
@@ -69,7 +72,7 @@ async def my_agent(ctx: JobContext):
     session = AgentSession(
         # Speech-to-text (STT) is your agent's ears, turning the user's speech into text that the LLM can understand
         # See all available models at https://docs.livekit.io/agents/models/stt/
-        stt=deepgram.STT(model="nova-3"),
+        stt=deepgram.STT(model="nova-3", language="multi"),
         # A Large Language Model (LLM) is your agent's brain, processing user input and generating a response
         # See all available models at https://docs.livekit.io/agents/models/llm/
         llm=google.LLM(
@@ -78,7 +81,7 @@ async def my_agent(ctx: JobContext):
         # Text-to-speech (TTS) is your agent's voice, turning the LLM's text into speech that the user can hear
         # See all available models as well as voice selections at https://docs.livekit.io/agents/models/tts/
         tts=murf.TTS(
-                voice="en-IN-anusha", 
+                voice="hi-IN-anisha", 
                 style="Conversation",
                 tokenizer=tokenize.basic.SentenceTokenizer(min_sentence_len=2),
                 text_pacing=True
