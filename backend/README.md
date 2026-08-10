@@ -10,6 +10,15 @@ User speaks → [Deepgram STT] → text → [Gemini LLM] → response → [Murf 
 
 LiveKit handles the real-time audio transport. The agent connects to LiveKit as a participant, listens for user speech, and responds with synthesized audio.
 
+## Domain Dataset & Function Tools (Financial Services Track)
+
+This project implements real domain data tools for financial scheme eligibility checking and document checklist retrieval.
+
+- **Step 2 (Dataset Source)**: Curated local dataset in `backend/src/scheme_data.py` based on official Government of India Financial Inclusion Circulars (covering PM Mudra Loan, PM Kisan Samman Nidhi, PM SVANidhi, Stand-Up India, and Atal Pension Yojana).
+- **Step 3 (Tool Description Strategy)**: `@function_tool` `check_scheme_eligibility` in `backend/src/agent.py` features a carefully engineered docstring so the LLM invokes it accurately when callers ask about loan eligibility, scheme guidelines, or document checklists.
+- **Step 4 (Out-Loud Failure Path)**: If network connections or dataset operations time out, the function catches the exception and returns an explicit instruction string for the agent to apologize and speak the error out loud rather than remaining silent or hallucinating.
+- **Step 5 (Data Freshness Timestamp)**: Tool responses are stamped with `[Official Policy Data as of: 10 August 2026 (Official Policy Circular)]` so the agent explicitly informs callers when the data was updated.
+
 ## Setup
 
 ### 1. Install dependencies
