@@ -17,6 +17,11 @@ const eslintConfig = [
     'prettier',
     'plugin:prettier/recommended'
   ),
+  {
+    rules: {
+      'import/no-unresolved': 'off',
+    },
+  },
 ];
 
 export default eslintConfig;
